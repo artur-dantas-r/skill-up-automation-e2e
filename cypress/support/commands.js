@@ -35,14 +35,14 @@ Cypress.Commands.add('fillMandatoryFieldsAndSubmit', { prevSubject: 'optional'},
     
     const root = subject || cy;
 
-    root.get('input[id="firstName"]').type(firstName, { delay: 0 });
-    root.get('input[id="lastName"]').type(lastName, { delay: 0 });
-    root.get('input[id="email"]')
+    root.get('#firstName').type(firstName, { delay: 0 });
+    root.get('#lastName').type(lastName, { delay: 0 });
+    root.get('#email')
       .should("be.visible")
       .type(email, {
         delay: 0,
       });
-    root.get('input[id="phone"]').type(phone, { delay: 0 });
+    root.get('#phone').type(phone, { delay: 0 });
 
     root.get('textarea[id="open-text-area"]').type(
       feedback,

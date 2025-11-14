@@ -7,14 +7,14 @@ describe("Central de Atendimento ao Cliente TAT", () => {
   });
 
   it("preenche campos obrigatórios e envia o formulário", () => {
-    cy.get('input[id="firstName"]').type("Artur", { delay: 0 });
-    cy.get('input[id="lastName"]').type("Dantas QA", { delay: 0 });
-    cy.get('input[id="email"]')
+    cy.get('#firstName').type("Artur", { delay: 0 });
+    cy.get('#lastName').type("Dantas QA", { delay: 0 });
+    cy.get('#email')
       .should("be.visible")
       .type("arturdantasrodrigues@gmail.com", {
         delay: 0,
       });
-    cy.get('input[id="phone"').type("83981914051", { delay: 0 });
+    cy.get('#phone').type("83981914051", { delay: 0 });
 
     cy.get('textarea[id="open-text-area"]').type(
       "Boa tarde! Talvez vocês pudessem colocar uma cor mais comum no formulário, não acho que o rosa combine com a proposta da página.",
@@ -36,14 +36,14 @@ describe("Central de Atendimento ao Cliente TAT", () => {
   });
 
   it("não permite que o usuário digite valores não númericos no campo de telefone", () => {
-    const phone = cy.get('input[id="phone"').type("artur dantas", { delay: 0 });
+    const phone = cy.get('#phone').type("artur dantas", { delay: 0 });
 
     phone.should("not.have.value");
   });
   it("exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário", () => {
-    cy.get('input[id="firstName"]').type("Artur", { delay: 0 });
-    cy.get('input[id="lastName"]').type("Dantas QA", { delay: 0 });
-    cy.get('input[id="email"]')
+    cy.get('#firstName').type("Artur", { delay: 0 });
+    cy.get('#lastName').type("Dantas QA", { delay: 0 });
+    cy.get('#email')
       .should("be.visible")
       .type("arturdantasrodrigues@gmail.com", {
         delay: 0,
@@ -64,14 +64,14 @@ describe("Central de Atendimento ao Cliente TAT", () => {
   });
 
   it("preenche e limpa os campos nome, sobrenome, email e telefone", () => {
-    cy.get('input[id="firstName"]').type("Artur", { delay: 0 }).clear().should('not.have.value');
-    cy.get('input[id="lastName"]').type("Dantas QA", { delay: 0 }).clear().should('not.have.value');
-    cy.get('input[id="email"]')
+    cy.get('#firstName').type("Artur", { delay: 0 }).clear().should('not.have.value');
+    cy.get('#lastName').type("Dantas QA", { delay: 0 }).clear().should('not.have.value');
+    cy.get('#email')
       .should("be.visible")
       .type("arturdantasrodrigues@gmail.com", {
         delay: 0,
       }).clear().should('not.have.value');
-    cy.get('input[id="phone"').type("83981914051", { delay: 0 }).clear().should('not.have.value');
+    cy.get('#phone').type("83981914051", { delay: 0 }).clear().should('not.have.value');
 
     cy.get('textarea[id="open-text-area"]').type(
       "Boa tarde! Talvez vocês pudessem colocar uma cor mais comum no formulário, não acho que o rosa combine com a proposta da página.",
