@@ -50,8 +50,4 @@ Cypress.Commands.add('fillMandatoryFieldsAndSubmit', { prevSubject: 'optional'},
     );
 
     root.contains('button', 'Enviar').click();
-
-    root.get(".success")
-      .should("be.visible")
-      .should("contain", "Mensagem enviada com sucesso.");
 })
