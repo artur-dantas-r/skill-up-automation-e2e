@@ -29,10 +29,18 @@ describe("Central de Atendimento ao Cliente TAT", () => {
   });
 
   it("exibe mensagem de erro ao submeter o formulário com um email com formatação inválida", () => {
+    cy.clock()
+    
     cy.contains("button", "Enviar").click();
+
     cy.get(".error")
       .should("be.visible")
       .should("contain", "Valide os campos obrigatórios!");
+
+    cy.tick(3000)
+    
+    cy.get(".error")
+      .should('not.be.visible')
   });
 
   it("não permite que o usuário digite valores não númericos no campo de telefone", () => {
@@ -41,6 +49,7 @@ describe("Central de Atendimento ao Cliente TAT", () => {
     phone.should("not.have.value");
   });
   it("exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário", () => {
+    cy.clock()
     cy.get("#firstName").type("Artur", { delay: 0 });
     cy.get("#lastName").type("Dantas QA", { delay: 0 });
     cy.get("#email")
@@ -61,6 +70,11 @@ describe("Central de Atendimento ao Cliente TAT", () => {
     cy.get(".error")
       .should("be.visible")
       .should("contain", "Valide os campos obrigatórios!");
+
+    cy.tick(3000)
+    
+    cy.get(".error")
+      .should('not.be.visible')
   });
 
   it("preenche e limpa os campos nome, sobrenome, email e telefone", () => {
