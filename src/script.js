@@ -1,68 +1,84 @@
-let isPhoneRequired = false
+const mealEnum = Object.freeze({
+  hot: 'prato quente',
+  salad: 'salada',
+  sandwich: 'sanduíche',
+  soup: 'sopa'
+})
 
-const phoneLabelSpan = document.querySelector('.phone-label-span')
-const phoneField = document.getElementById('phone')
+const mealContainer = document.getElementById('meal-container')
+const loading = document.getElementById('loading')
+const mealName = document.getElementById('meal-name')
+const ingredientsLabel = document.getElementById('ingredients-label')
+const ingredientsList = document.getElementById('ingredients-list')
+const generateMealButton = document.getElementById('generate-meal-button')
+const mealTypeFilter = document.getElementById('meal-type-filter')
+const searchField = document.getElementById('search-field')
+const searchButton = document.querySelector('#search-container button[type="submit"]')
 
-document.querySelector('#phone-checkbox')
-  .addEventListener('change', function() {
-    if (this.checked) {
-      phoneLabelSpan.style.display = 'inline'
-    } else {
-      phoneLabelSpan.style.display = 'none'
+// eslint-disable-next-line no-undef
+let filteredMeals = [...meals]
+
+mealTypeFilter.addEventListener('change', e => {
+  const selectedType = e.target.value
+  if (selectedType === 'all') {
+    // eslint-disable-next-line no-undef
+    filteredMeals = [...meals]
+    generateMeal()
+  } else {
+    // eslint-disable-next-line no-undef
+    filteredMeals = meals.filter(meal => meal.type === selectedType)
+    generateMeal()
+  }
+})
+
+let searchedMeal
+
+searchField.addEventListener('change', e => {
+  searchedMeal = e.target.value.toLowerCase().trim()
+
+  filteredMeals.forEach(filteredMeal => {
+    if (filteredMeal.name.toLowerCase().includes(searchedMeal)) {
+      const randomTimeoutBetweenZeroAndTenSeconds = Math.floor(Math.random() * 11) * 1000
+      console.log(`${randomTimeoutBetweenZeroAndTenSeconds } milliseconds for meal to show.`)
+      mealContainer.style.display = 'none'
+      loading.style.display = 'block'
+      setTimeout(() => {
+        mealContainer.style.display = 'block'
+        loading.style.display = 'none'
+        showMealName(filteredMeal)
+        showIngredients(filteredMeal.ingredients)
+      }, randomTimeoutBetweenZeroAndTenSeconds)
     }
-    phoneField.required = !isPhoneRequired
-    isPhoneRequired = !isPhoneRequired
   })
+})
 
-document.querySelector('button[type="submit"]')
-  .addEventListener('click', function(event) {
-    event.preventDefault()
-    const firstNameField = document.getElementById('firstName')
-    const lastNameField = document.getElementById('lastName')
-    const emailField = document.getElementById('email')
-    const textareaField = document.getElementById('open-text-area')
-    const productField = document.getElementById('product')
-    const helpRadio = document.querySelector('input[value="ajuda"]')
-    const emailCheckbox = document.getElementById('email-checkbox')
-    const phoneCheckbox = document.getElementById('phone-checkbox')
-    const fileField = document.querySelector('input[type="file"]')
-    const successMessage = document.querySelector('.success')
-    if (!firstNameField.value || !lastNameField.value || !emailField.value || !textareaField.value) {
-      return showAndHideErrorMessage()
-    }
-    if (isPhoneRequired && !phoneField.value) {
-      return showAndHideErrorMessage()
-    }
-    if (!emailField.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
-      return showAndHideErrorMessage()
-    }
-    firstNameField.value = ''
-    lastNameField.value = ''
-    emailField.value = ''
-    textareaField.value = ''
-    phoneField.value = ''
-    productField.selectedIndex = 0
-    helpRadio.checked = true
-    emailCheckbox.checked = false
-    phoneCheckbox.checked = false
-    fileField.value = ''
-    phoneLabelSpan.style.display = 'none'
-    successMessage.style.display = 'block'
-    isPhoneRequired = false
-    scroll(0,0)
-    hideMessageAfterTimeout(successMessage)
-  }, false)
+searchButton.addEventListener('click', e => {
+  e.preventDefault()
+})
 
-function showAndHideErrorMessage() {
-  const errorMessage = document.querySelector('.error')
-  errorMessage.style.display = 'block'
-  scroll(0,0)
-  hideMessageAfterTimeout(errorMessage)
-  return
+function generateMeal() {
+  const randomMeal = filteredMeals[Math.floor(Math.random() * filteredMeals.length)]
+  showMealName(randomMeal)
+  showIngredients(randomMeal.ingredients)
+  searchField.value = ''
 }
 
-function hideMessageAfterTimeout(element) {
-  setTimeout(function() {
-    element.style.display = 'none'
-  }, 3000)
+function showMealName(meal) {
+  mealName.innerHTML = `Refeição: ${meal.name} (${mealEnum[meal.type]})`
 }
+
+function showIngredients(ingredients) {
+  ingredientsList.innerHTML = ''
+  for (const ingredient of ingredients) {
+    const listItem = document.createElement('li')
+    ingredientsLabel.innerHTML = 'Ingredientes:'
+    listItem.innerHTML = ingredient
+    ingredientsList.appendChild(listItem)
+  }
+}
+
+window.onload = () => {
+  generateMeal()
+}
+
+generateMealButton.addEventListener('click', generateMeal)

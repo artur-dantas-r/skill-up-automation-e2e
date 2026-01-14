@@ -1,31 +1,20 @@
 {
-  "name": "cypress-do-zero-a-nuvem",
+  "name": "boas-praticas-em-automacao-de-testes-com-cypress",
   "version": "1.0.0",
-  "description": "Curso 'Cypress, do Zero à Nuvem' da Escola Talking About Testing.",
-  "main": "src/index.html",
+  "description": "Repositório da versão 2 do curso de boas práticas com Cypress da Escola Talking About Testing no Udemy",
   "scripts": {
-    "test": "cypress run", 
-    "test:mobile": "cypress run --config viewportWidth=410 viewportHeight=860",
-    "cy:open": "cypress open", 
-    "cy:open:mobile": "cypress open --config viewportWidth=410 viewportHeight=860"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wlsf82/cypress-do-zero-a-nuvem.git"
+    "test": "cypress run",
+    "cy:open": "cypress open"
   },
   "keywords": [
-    "Testing",
-    "Cypress.io",
-    "Talking About Testing",
-    "Cypress, do Zero à Nuvem",
-    "Cypress Cloud",
-    "GitHub Actions",
-    "Escola TAT"
+    "cypress.io",
+    "talking about testing",
+    "good practices"
   ],
-  "author": "Walmyr <wlsf82@gmail.com> (https://walmyr.dev/)",
+  "author": "Walmyr Filho <wlsf82@gmail.com> (https://walmyr.dev)",
   "license": "MIT",
-  "homepage": "https://github.com/wlsf82/cypress-do-zero-a-nuvem#readme",
   "devDependencies": {
-    "cypress": "^13.12.0"
+    "@faker-js/faker": "^7.6.0",
+    "cypress": "^12.8.1"
   }
 }
