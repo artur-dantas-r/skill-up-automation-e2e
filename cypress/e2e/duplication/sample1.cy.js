@@ -4,6 +4,11 @@ describe("Code duplication bad practice - repetitive steps", () => {
 
     cy.visit("https://hackernews-seven.vercel.app");
     cy.wait("@getStories");
+
+    cy.get('input[type="text"]')
+      .should("be.visible")
+      .and('have.value', 'redux')
+      .clear()
   });
   it("searches by typing and hitting enter", () => {
     cy.search('frontend testing')

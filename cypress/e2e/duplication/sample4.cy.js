@@ -5,6 +5,6 @@ describe('Code duplication bad practice - multiple checks', () => {
  
   it('checks all checkboxes from a specific fieldset', () => {
 
-    cy.get(':nth-child(4) > fieldset [type = "checkbox"]').check()
+    cy.get('fieldset div input[type = "checkbox"]').check()
   })
 })
