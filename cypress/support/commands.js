@@ -5,12 +5,6 @@ Cypress.Commands.add("search", (term, hitEnter = true) => {
     .type(`${term}${hitEnter ? "{enter}" : ""}`);
 });
 
-Cypress.Commands.add("assertResults", () => {
-  cy.get(".table-row").then((rows) => {
-    expect(rows.length).to.be.at.least(1);
-  });
-});
-
 Cypress.Commands.add("updateInfo", (data) => {
   cy.get("#destination_name").clear().type(data.name);
   cy.get("#destination_description").clear().type(data.description);
