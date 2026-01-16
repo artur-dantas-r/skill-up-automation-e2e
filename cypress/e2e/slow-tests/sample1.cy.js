@@ -2,7 +2,8 @@ describe('Slow tests bad practice - use the API to test the frontend', () => {
   beforeEach(() => {
     cy.intercept(
       'GET',
-      '**/search**'
+      '**/search**', 
+      {fixture: 'search'}
     ).as('getStories')
 
     cy.visit('https://hackernews-seven.vercel.app')
