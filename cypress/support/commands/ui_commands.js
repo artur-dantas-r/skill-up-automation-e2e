@@ -24,10 +24,14 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('uiFillAndSubmitSignupForm', ({name = 'coisado', email = 'teste@gmail.com', password = 'supersenha'}) => {
+Cypress.Commands.add('uiFillAndSubmitSignupForm', ({name = 'coisado', email = 'teste@gmail.com', password = 'supersenha', isAdmin = 'false'}) => {
     cy.get('[data-testid="nome"]').type(name)
     cy.get('[data-testid="email"]').type(email)
     cy.get('[data-testid="password"]').type(password, { log: false })
+
+    if(isAdmin == 'true') {
+        cy.get('[data-testid="checkbox"]').check()
+    }
 
     cy.get('[data-testid="cadastrar"]').click()
 })
