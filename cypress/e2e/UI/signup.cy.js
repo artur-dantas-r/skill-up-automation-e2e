@@ -55,7 +55,7 @@ describe('signup', () => {
             cy.contains('Serverest Store').should('be.visible')
         })
 
-        it.only('sginup with a already used email', () => {
+        it('sginup with a already used email', () => {
             const user = {
                 name: faker.internet.username(),
                 email: faker.internet.email(),
