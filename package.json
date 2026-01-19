@@ -1,20 +1,32 @@
 {
-  "name": "boas-praticas-em-automacao-de-testes-com-cypress",
+  "name": "skill-up-automation-e2e",
   "version": "1.0.0",
-  "description": "Repositório da versão 2 do curso de boas práticas com Cypress da Escola Talking About Testing no Udemy",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "cypress run",
-    "cy:open": "cypress open"
+    "test": "npx cypress run",
+    "cy:open": "npx cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artur-dantas-r/skill-up-automation-e2e.git"
   },
   "keywords": [
-    "cypress.io",
-    "talking about testing",
-    "good practices"
+    "cypress",
+    "serverest",
+    "api",
+    "rest",
+    "e2e",
+    "app actions"
   ],
-  "author": "Walmyr Filho <wlsf82@gmail.com> (https://walmyr.dev)",
-  "license": "MIT",
+  "author": "Artur Dantas Rodrigues",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/artur-dantas-r/skill-up-automation-e2e/issues"
+  },
+  "homepage": "https://github.com/artur-dantas-r/skill-up-automation-e2e#readme",
   "devDependencies": {
-    "@faker-js/faker": "^7.6.0",
-    "cypress": "^12.8.1"
+    "@faker-js/faker": "^10.2.0",
+    "cypress": "14.3.0"
   }
 }
