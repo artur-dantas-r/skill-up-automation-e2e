@@ -2,7 +2,6 @@
 import { faker } from "@faker-js/faker"
 
 describe('login', () => {
-    const apiUrl = Cypress.env('api_url')
 
     beforeEach(() => {
         cy.visit('/')
@@ -10,25 +9,19 @@ describe('login', () => {
     })
 
     context('E2E', () => {
-        const username = faker.internet.username()
-        const userEmail = faker.internet.email()
-        const userPassword = faker.word.adjective(7)
+        const user = {
+            name: faker.internet.username(),
+            email: faker.internet.email(),
+            password: faker.word.adjective(7),
+            isAdmin: 'false'
+        }
+
         let userId = null
 
         before(() => {
             cy.log('Cadastrando novo usuário para testes de login')
 
-            cy.request({
-                method: 'POST',
-                url: `${apiUrl}/usuarios`,
-                failOnStatusCode: false,
-                body: {
-                    nome: username,
-                    email: userEmail,
-                    password: userPassword,
-                    administrador: "false"
-                }
-            }).then(res => {
+            cy.apiRegisterUser(user).then(res => {
                 if (res.status === 201) {
                     userId = res.body._id
 
@@ -41,13 +34,9 @@ describe('login', () => {
         after(() => {
             if (userId) {
                 cy.log('Removendo usuário de teste');
-                cy.request({
-                    method: 'DELETE',
-                    url: `${apiUrl}/usuarios/${userId}`,
-                    failOnStatusCode: false,
-                }).then((res) => {
+                cy.apiDeleteUser(userId).then((res) => {
                     if (res.status === 200) {
-                        cy.log(res.body.message);
+                        cy.log(`${res.body.message}: ${userId}`);
                     } else {
                         cy.log('Falha ao remover o usuário:', res.body.message);
                     }
@@ -58,8 +47,8 @@ describe('login', () => {
         });
 
         it('login as a valid user', () => {
-            cy.get('[data-testid="email"]').type(userEmail)
-            cy.get('[data-testid="senha"]').type(userPassword, { log: false })
+            cy.get('[data-testid="email"]').type(user.email)
+            cy.get('[data-testid="senha"]').type(user.password, { log: false })
 
             cy.get('[data-testid="entrar"]').click()
 
@@ -70,25 +59,27 @@ describe('login', () => {
     })
 
     context('UI', () => {
-        const userEmail = faker.internet.email()
-        const userPassword = faker.word.adjective(7)
+        const user = {
+            email: faker.internet.email(),
+            password: faker.word.adjective(7)
+        }
 
-        it('login as a invalid user', () => {
+            it('login as a invalid user', () => {
 
-            cy.get('[data-testid="email"]').type(userEmail)
-            cy.get('[data-testid="senha"]').type(userPassword, { log: false })
+                cy.get('[data-testid="email"]').type(user.email)
+                cy.get('[data-testid="senha"]').type(user.password, { log: false })
 
-            cy.get('[data-testid="entrar"]').click()
+                cy.get('[data-testid="entrar"]').click()
 
-            cy.wait('@loginRequest').then(({ response }) => {
-                cy.wrap(response.body.message).should('equal', 'Email e/ou senha inválidos')
+                cy.wait('@loginRequest').then(({ response }) => {
+                    cy.wrap(response.body.message).should('equal', 'Email e/ou senha inválidos')
+                })
+
+                cy.get('.alert').should('contain', 'Email e/ou senha inválidos')
             })
 
-            cy.get('.alert').should('contain', 'Email e/ou senha inválidos')
-        })
-
         it('login only with email', () => {
-            cy.get('[data-testid="email"]').type(userEmail)
+            cy.get('[data-testid="email"]').type(user.email)
 
             cy.get('[data-testid="entrar"]').click()
 
@@ -100,7 +91,7 @@ describe('login', () => {
         })
 
         it('login only with password', () => {
-            cy.get('[data-testid="senha"]').type(userPassword, { log: false })
+            cy.get('[data-testid="senha"]').type(user.password, { log: false })
 
             cy.get('[data-testid="entrar"]').click()
 
