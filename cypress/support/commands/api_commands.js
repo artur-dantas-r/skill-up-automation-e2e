@@ -25,11 +25,6 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 const apiUrl = Cypress.env('api_url')
 
-/**
- * Registers a user via API.
- * @param {{ name: string, email: string, password: string, isAdmin: string }} user - The user details.
- * @returns {Cypress.Chainable<Cypress.Response<any>>} The Cypress request chainable.
- */
 Cypress.Commands.add('apiRegisterUser', ({ name = 'coisado', email = 'teste@gmail.com', password = 'supersenha', isAdmin = 'false' }) => {
     return cy.request({
         method: 'POST',
@@ -44,11 +39,6 @@ Cypress.Commands.add('apiRegisterUser', ({ name = 'coisado', email = 'teste@gmai
     })
 })
 
-/**
- * Registers a user via API.
- * @param {string} userId - The ID of the user
- * @returns {Cypress.Chainable<Cypress.Response<any>>} The Cypress request chainable.
- */
 Cypress.Commands.add('apiDeleteUser', (userId) => {
     return cy.request({
         method: 'DELETE',
@@ -56,6 +46,3 @@ Cypress.Commands.add('apiDeleteUser', (userId) => {
         failOnStatusCode: false
     })
 })
-
-
-
