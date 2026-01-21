@@ -21,7 +21,7 @@ describe('login', () => {
         before(() => {
             cy.log('Cadastrando novo usuário para testes de login')
 
-            cy.apiRegisterUser(user).then(res => {
+            cy.apiSignUpUser(user).then(res => {
                 expect(res.status).to.equal(201, 'Usuário cadastrado com successo')
                 userId = res.body._id
             })
@@ -31,18 +31,15 @@ describe('login', () => {
             if (userId) {
                 cy.log('Removendo usuário de teste');
                 cy.apiDeleteUser(userId).then((res) => {
-                    if (res.status === 200) {
-                        cy.log(`${res.body.message}: ${userId}`);
-                    } else {
-                        cy.log('Falha ao remover o usuário:', res.body.message);
-                    }
+                    expect(res.status).to.be.equal(200)
+                    cy.log(`${res.body.message}: ${userId}`);
                 });
             } else {
                 cy.log('Nenhum usuário para remover')
             }
         });
 
-        it('login as a valid user', () => {
+        it('should login as a valid user', () => {
             cy.get('[data-testid="email"]').type(user.email)
             cy.get('[data-testid="senha"]').type(user.password, { sensitive: true })
 
@@ -60,7 +57,7 @@ describe('login', () => {
             password: faker.word.adjective(7)
         }
 
-        it('login as a invalid user', () => {
+        it('should not login as a invalid user', () => {
 
             cy.get('[data-testid="email"]').type(user.email)
             cy.get('[data-testid="senha"]').type(user.password, { log: false })
@@ -71,10 +68,10 @@ describe('login', () => {
                 expect(response.body).to.have.property('message', 'Email e/ou senha inválidos')
             })
 
-            cy.get('.alert', ).should('contain', 'Email e/ou senha inválidos')
+            cy.get('.alert',).should('contain', 'Email e/ou senha inválidos')
         })
 
-        it('login only with email', () => {
+        it('should not login only with email', () => {
             cy.get('[data-testid="email"]').type(user.email)
 
             cy.get('[data-testid="entrar"]').click()
@@ -86,7 +83,7 @@ describe('login', () => {
             cy.get('.alert').should('contain', 'Password é obrigatório')
         })
 
-        it('login only with password', () => {
+        it('should not login only with password', () => {
             cy.get('[data-testid="senha"]').type(user.password, { log: false })
 
             cy.get('[data-testid="entrar"]').click()
@@ -98,7 +95,7 @@ describe('login', () => {
             cy.get('.alert').should('contain', 'Email é obrigatório')
         })
 
-        it('login with empty fields', () => {
+        it('should show error messages when form is submitted without filling fields', () => {
             cy.get('[data-testid="entrar"]').click()
 
             cy.wait('@loginRequest').then(({ response }) => {

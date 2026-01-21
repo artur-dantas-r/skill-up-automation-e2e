@@ -25,7 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 const apiUrl = Cypress.env('api_url')
 
-Cypress.Commands.add('apiRegisterUser', ({ name = 'coisado', email = 'teste@gmail.com', password = 'supersenha', isAdmin = 'false' }) => {
+Cypress.Commands.add('apiSignUpUser', ({ name = 'coisado', email = 'teste@gmail.com', password = 'supersenha', isAdmin = 'false' }) => {
     return cy.request({
         method: 'POST',
         url: `${apiUrl}/usuarios`,

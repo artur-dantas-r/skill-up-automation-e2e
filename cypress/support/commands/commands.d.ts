@@ -22,7 +22,7 @@ declare namespace Cypress {
      * Registers a user via API.
      * Does not fail on non-2xx responses.
      */
-    apiRegisterUser(user: {
+    apiSignUpUser(user: {
       name: string;
       email: string;
       password: string;

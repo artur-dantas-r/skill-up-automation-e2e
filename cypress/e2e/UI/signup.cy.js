@@ -38,11 +38,8 @@ describe('signup', () => {
                 userIds.forEach(userId => {
                     cy.apiDeleteUser(userId)
                         .then((res) => {
-                            if (res.status === 200) {
-                                cy.log(`${res.body.message}: ${userId}`);
-                            } else {
-                                cy.log('Falha ao remover o usuário:', res.body.message);
-                            }
+                            expect(res.status).to.be.equal(200) 
+                            cy.log(`${res.body.message}: ${userId}`);
                         });
                 })
             } else {
@@ -50,7 +47,7 @@ describe('signup', () => {
             }
         });
 
-        it('sginup as a valid user', () => {
+        it('should signup as a valid user', () => {
             const user = userFactory()
 
             cy.intercept('**/login').as('loginRequest')
@@ -71,7 +68,7 @@ describe('signup', () => {
             cy.contains('Serverest Store', {timeout: 10000}).should('be.visible')
         })
 
-        it('sginup as a valid admin user', () => {
+        it('should signup as a valid admin user', () => {
             const user = userFactory({ isAdmin: 'true' })
 
             cy.intercept('**/login').as('loginRequest')
@@ -94,12 +91,12 @@ describe('signup', () => {
         })
 
 
-        it('sginup with a already used email', () => {
+        it('should not signup with an already used email', () => {
             const user = userFactory()
 
             cy.log('Cadastrando novo usuário para testes de login')
 
-            cy.apiRegisterUser(user)
+            cy.apiSignUpUser(user)
                 .then(res => {
                     expect(res.status).to.equal(201, 'Usuário cadastrado com successo')
                     // Salvando IDs para deletar os usuários ao finalizar os testes
@@ -120,7 +117,7 @@ describe('signup', () => {
 
     context('UI', () => {
         const user = userFactory()
-        it('register user without name', () => {
+        it('should not signup user without name', () => {
             const { email, password, isAdmin } = user
 
             cy.uiFillAndSubmitSignupForm({ email, password, isAdmin })
@@ -134,7 +131,7 @@ describe('signup', () => {
             cy.get('.alert').should('contain', 'Nome é obrigatório')
         })
 
-        it('register user without email', () => {
+        it('should not signup user without email', () => {
             const { name, password, isAdmin } = user
 
             cy.uiFillAndSubmitSignupForm({ name, password, isAdmin })
@@ -148,7 +145,7 @@ describe('signup', () => {
             cy.get('.alert').should('contain', 'Email é obrigatório')
         })
 
-        it('register user without password', () => {
+        it('should not signup user without password', () => {
             const { name, email, isAdmin } = user
 
             cy.uiFillAndSubmitSignupForm({ name, email, isAdmin })
@@ -162,7 +159,7 @@ describe('signup', () => {
             cy.get('.alert').should('contain', 'Password é obrigatório')
         })
 
-        it('click submit button without providing user data', () => {
+        it('should show error messages when form is submitted without filling fields', () => {
             cy.get('[data-testid="cadastrar"]').click()
 
             cy.wait('@signUpRequest').then(({ response }) => {
