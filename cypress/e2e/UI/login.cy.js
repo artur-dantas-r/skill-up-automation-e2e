@@ -44,7 +44,7 @@ describe('login', () => {
 
         it('login as a valid user', () => {
             cy.get('[data-testid="email"]').type(user.email)
-            cy.get('[data-testid="senha"]').type(user.password, { log: false })
+            cy.get('[data-testid="senha"]').type(user.password, { sensitive: true })
 
             cy.get('[data-testid="entrar"]').click()
 
@@ -68,10 +68,10 @@ describe('login', () => {
             cy.get('[data-testid="entrar"]').click()
 
             cy.wait('@loginRequest').then(({ response }) => {
-                expect(response.body.message).to.equal('Email e/ou senha inválidos')
+                expect(response.body).to.have.property('message', 'Email e/ou senha inválidos')
             })
 
-            cy.get('.alert').should('contain', 'Email e/ou senha inválidos')
+            cy.get('.alert', ).should('contain', 'Email e/ou senha inválidos')
         })
 
         it('login only with email', () => {
@@ -80,10 +80,10 @@ describe('login', () => {
             cy.get('[data-testid="entrar"]').click()
 
             cy.wait('@loginRequest').then(({ response }) => {
-                expect(response.body.password).to.equal('password é obrigatório')
+                expect(response.body).to.have.property('password', 'password é obrigatório')
             })
 
-            cy.get('.form > :nth-child(3)').should('contain', 'Password é obrigatório')
+            cy.get('.alert').should('contain', 'Password é obrigatório')
         })
 
         it('login only with password', () => {
@@ -92,22 +92,23 @@ describe('login', () => {
             cy.get('[data-testid="entrar"]').click()
 
             cy.wait('@loginRequest').then(({ response }) => {
-                expect(response.body.email).to.equal('email é obrigatório')
+                expect(response.body).to.have.property('email', 'email é obrigatório')
             })
 
-            cy.get('.form > :nth-child(3)').should('contain', 'Email é obrigatório')
+            cy.get('.alert').should('contain', 'Email é obrigatório')
         })
 
         it('login with empty fields', () => {
             cy.get('[data-testid="entrar"]').click()
 
             cy.wait('@loginRequest').then(({ response }) => {
-                expect(response.body.email).to.equal('email é obrigatório')
-                expect(response.body.password).to.equal('password é obrigatório')
+                expect(response.body).to.have.property('email', 'email é obrigatório')
+                expect(response.body).to.have.property('password', 'password é obrigatório')
             })
 
-            cy.get('.form > :nth-child(3)').should('contain', 'Email é obrigatório')
-            cy.get('.form > :nth-child(4)').should('contain', 'Password é obrigatório')
+            cy.get('.alert')
+                .should('contain', 'Email é obrigatório')
+                .and('contain', 'Password é obrigatório')
         })
     })
 })
