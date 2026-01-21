@@ -16,3 +16,20 @@
 // Import commands.js using ES2015 syntax:
 import './commands/ui_commands'
 import './commands/api_commands'
+
+Cypress.Commands.overwrite('type', (originalFn, subject, text, options = {}) => {
+    options.delay = options.delay || 0; // Use 0ms default delay, or the provided option
+
+    if (options && options.sensitive) {
+        // turn off original log
+        options.log = false
+        // create our own log with masked message
+        Cypress.log({
+            $el: subject,
+            name: 'type',
+            message: '*'.repeat(text.length),
+        })
+    }
+
+    return originalFn(subject, text, options);
+});

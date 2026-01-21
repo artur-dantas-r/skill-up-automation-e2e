@@ -36,7 +36,7 @@ Cypress.Commands.add(
         }
 
         if (password) {
-            cy.get('[data-testid="password"]').type(password, { log: false })
+            cy.get('[data-testid="password"]').type(password, { sensitive: true })
         }
 
         if (isAdmin === 'true') {
