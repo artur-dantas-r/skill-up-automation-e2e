@@ -15,7 +15,7 @@ describe('signup', () => {
             password: faker.word.adjective(7),
             isAdmin: 'false'
         }
-        let userIds = []
+        let userIds = [] // users created during the test
 
 
         after(() => {
@@ -36,15 +36,16 @@ describe('signup', () => {
                 cy.log('Nenhum usuário para remover')
             }
         });
+
         it('sginup as a valid user', () => {
             cy.intercept('**/login').as('loginRequest')
 
             cy.uiFillAndSubmitSignupForm(user)
 
             cy.wait('@signUpRequest').then(({ response }) => {
-                cy.wrap(response.statusCode).should('equal', 201)
-                cy.wrap(response.body.message).should('equal', 'Cadastro realizado com sucesso')
-                cy.wrap(response.body._id).should('exist')
+                expect(response.statusCode).to.equal(201)
+                expect(response.body.message).to.equal('Cadastro realizado com sucesso')
+                expect(response.body._id).to.exist
 
                 // Salvando IDs para deletar os usuários ao finalizar os testes
                 userIds = [...userIds, response.body._id]
@@ -67,21 +68,17 @@ describe('signup', () => {
 
             cy.apiRegisterUser(user)
                 .then(res => {
-                    if (res.status === 201) {
-                        // Salvando IDs para deletar os usuários ao finalizar os testes
-                        userIds = [...userIds, res.body._id]
-
-                        return cy.log('Usuário cadastrado com sucesso')
-                    }
-                    return cy.log(res.body.message)
+                    expect(res.status).to.equal(201, 'Usuário cadastrado com successo')
+                    // Salvando IDs para deletar os usuários ao finalizar os testes
+                    userIds = [...userIds, res.body._id]
                 })
 
             cy.uiFillAndSubmitSignupForm(user)
 
             cy.wait('@signUpRequest').then(({ response }) => {
-                cy.wrap(response.statusCode).should('equal', 400)
-                cy.wrap(response.body.message).should('equal', 'Este email já está sendo usado')
-                cy.wrap(response.body._id).should('not.exist')
+                expect(response.statusCode).to.equal(400)
+                expect(response.body.message).to.equal('Este email já está sendo usado')
+                expect(response.body._id).to.not.exist
             })
 
             cy.get('.alert').should('contain', 'Este email já está sendo usado')
