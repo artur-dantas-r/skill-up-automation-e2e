@@ -23,7 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-const apiUrl = Cypress.env('api_url')
+const apiUrl = Cypress.expose('api_url')
 
 Cypress.Commands.add('apiSignUpUser', ({ name = 'coisado', email = 'teste@gmail.com', password = 'supersenha', isAdmin = 'false' }) => {
     return cy.request({
