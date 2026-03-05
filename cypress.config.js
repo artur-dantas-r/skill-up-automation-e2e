@@ -18,7 +18,7 @@ export default defineConfig({
       })
 
       allureCypress(on, config, {
-        resultsDir: "allure-result",
+        resultsDir: "allure-results",
       });
       return config
     },
