@@ -1,0 +1,74 @@
+{
+  "post": {
+    "newTask": {
+      "name": "comprar café",
+      "tags": ["cozinha", "compras"]
+    },
+    "duplicatedTask": {
+      "name": "revisar código",
+      "tags": ["trabalho", "desenvolvimento", "urgent"]
+    },
+    "moreThanTreeTags": {
+      "name": "agendar dentista",
+      "tags": ["saúde", "médico", "pessoal", "importante"]
+    }
+  },
+  "get": {
+    "manyTasks": [
+      {
+        "name": "comprar café",
+        "tags": ["cozinha", "compras"]
+      },
+      {
+        "name": "enviar relatório",
+        "tags": ["trabalho", "email", "deadline"]
+      },
+      {
+        "name": "ligar para o cliente",
+        "tags": ["cliente", "importante", "follow-up"]
+      },
+      {
+        "name": "ir à farmácia",
+        "tags": ["saúde", "compras", "medicamento"]
+      },
+      {
+        "name": "reunião com o time",
+        "tags": ["reunião", "trabalho", "feedback"]
+      }
+    ],
+    "singleTask": {
+      "name": "backup dos arquivos",
+      "tags": ["dados", "segurança", "backup"]
+    }
+  },
+  "put": {
+    "manyTasks": [
+      {
+        "name": "finalizar projeto",
+        "tags": ["trabalho", "projeto", "prioritário"]
+      },
+      {
+        "name": "aproveitar para descanso",
+        "tags": ["pessoal", "lazer", "saúde"]
+      },
+      {
+        "name": "organizar documentos",
+        "tags": ["administrativo", "organização", "importante"]
+      },
+      {
+        "name": "fazer backup no servidor",
+        "tags": ["TI", "servidor", "manutenção", "crítico"]
+      }
+    ],
+    "singleTask": {
+      "name": "estudar testes automatizados",
+      "tags": ["aprendizado", "testes", "desenvolvimento"]
+    }
+  },
+  "delete": {
+    "singleTask": {
+      "name": "limpar cache",
+      "tags": ["manutenção", "limpeza", "sistema"]
+    }
+  }
+}
