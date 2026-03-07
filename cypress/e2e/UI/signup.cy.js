@@ -1,25 +1,6 @@
 /// <reference types="cypress" />
+import { userFactory } from "../../support/utils"
 
-import { faker } from "@faker-js/faker"
-
-/**
- * Creates a user object for tests
- * @param {{
- * name?: string,
- * email?: string,
- * password?: string, 
- * isAdmin?: string
- * }} overrides
- */
-const userFactory = (overrides = {}) => {
-    return {
-        name: faker.internet.username(),
-        email: faker.internet.email(),
-        password: faker.word.adjective(7),
-        isAdmin: 'false',
-        ...overrides
-    }
-}
 
 describe('signup', () => {
 
@@ -69,7 +50,7 @@ describe('signup', () => {
         })
 
         it('should signup as a valid admin user', () => {
-            const user = userFactory({ isAdmin: 'true' })
+            const user = userFactory({ administrador: 'true' })
 
             cy.intercept('**/login').as('loginRequest')
 
@@ -86,7 +67,7 @@ describe('signup', () => {
 
             cy.wait('@loginRequest')
 
-            cy.contains(`Bem Vindo ${user.name}`, {timeout: 10000}).should('be.visible')
+            cy.contains(`Bem Vindo ${user.nome}`, {timeout: 10000}).should('be.visible')
             cy.contains('Este é seu sistema para administrar seu ecommerce.')
         })
 
@@ -96,7 +77,7 @@ describe('signup', () => {
 
             cy.log('Cadastrando novo usuário para testes de login')
 
-            cy.apiSignUpUser(user)
+            cy.apiSignUpUser(user, true)
                 .then(res => {
                     expect(res.status).to.equal(201, 'Usuário cadastrado com successo')
                     // Salvando IDs para deletar os usuários ao finalizar os testes
@@ -118,9 +99,9 @@ describe('signup', () => {
     context('UI', () => {
         const user = userFactory()
         it('should not signup user without name', () => {
-            const { email, password, isAdmin } = user
+            const { email, password, administrador } = user
 
-            cy.uiFillAndSubmitSignupForm({ email, password, isAdmin })
+            cy.uiFillAndSubmitSignupForm({ email, password, administrador })
 
             cy.wait('@signUpRequest').then(({ response }) => {
                 expect(response.statusCode).to.equal(400)
@@ -132,9 +113,9 @@ describe('signup', () => {
         })
 
         it('should not signup user without email', () => {
-            const { name, password, isAdmin } = user
+            const { nome, password, administrador } = user
 
-            cy.uiFillAndSubmitSignupForm({ name, password, isAdmin })
+            cy.uiFillAndSubmitSignupForm({ nome, password, administrador })
 
             cy.wait('@signUpRequest').then(({ response }) => {
                 expect(response.statusCode).to.equal(400)
@@ -146,9 +127,9 @@ describe('signup', () => {
         })
 
         it('should not signup user without password', () => {
-            const { name, email, isAdmin } = user
+            const { nome, email, administrador } = user
 
-            cy.uiFillAndSubmitSignupForm({ name, email, isAdmin })
+            cy.uiFillAndSubmitSignupForm({ nome, email, administrador })
 
             cy.wait('@signUpRequest').then(({ response }) => {
                 expect(response.statusCode).to.equal(400)

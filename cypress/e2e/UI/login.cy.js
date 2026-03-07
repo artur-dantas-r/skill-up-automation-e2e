@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 import { faker } from "@faker-js/faker"
+import { userFactory } from "../../support/utils"
 
 describe('login', () => {
 
@@ -9,19 +10,14 @@ describe('login', () => {
     })
 
     context('E2E', () => {
-        const user = {
-            name: faker.internet.username(),
-            email: faker.internet.email(),
-            password: faker.word.adjective(7),
-            isAdmin: 'false'
-        }
+        const user = userFactory()
 
         let userId = null
 
         before(() => {
             cy.log('Cadastrando novo usuário para testes de login')
 
-            cy.apiSignUpUser(user).then(res => {
+            cy.apiSignUpUser(user, true).then(res => {
                 expect(res.status).to.equal(201, 'Usuário cadastrado com successo')
                 userId = res.body._id
             })

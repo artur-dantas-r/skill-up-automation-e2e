@@ -16,6 +16,7 @@
 // Import commands.js using ES2015 syntax:
 import './commands/ui_commands'
 import './commands/api_commands'
+import 'cypress-plugin-api'
 
 Cypress.Commands.overwrite('type', (originalFn, subject, text, options = {}) => {
     options.delay = options.delay || 0; // Use 0ms default delay, or the provided option

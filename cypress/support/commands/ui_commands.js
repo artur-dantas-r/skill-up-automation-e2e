@@ -26,9 +26,9 @@
 
 Cypress.Commands.add(
     'uiFillAndSubmitSignupForm',
-    ({ name, email, password, isAdmin = 'false' }) => {
-        if (name) {
-            cy.get('[data-testid="nome"]').type(name)
+    ({ nome, email, password, administrador = 'false' }) => {
+        if (nome) {
+            cy.get('[data-testid="nome"]').type(nome)
         }
 
         if (email) {
@@ -39,7 +39,7 @@ Cypress.Commands.add(
             cy.get('[data-testid="password"]').type(password, { sensitive: true })
         }
 
-        if (isAdmin === 'true') {
+        if (administrador === 'true') {
             cy.get('[data-testid="checkbox"]').check()
         }
 
