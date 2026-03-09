@@ -13,9 +13,11 @@ describe('POST /carrinhos', () => {
       usuario = body
     })
 
-    // Fazer login para obter token
-    cy.apiLogin({ email: novoUsuario.email, password: novoUsuario.password }).then(({ body }) => {
-      token = body.authorization
+    cy.then(() => {
+      // Fazer login para obter token
+      cy.apiLogin({ email: novoUsuario.email, password: novoUsuario.password }).then(({ body }) => {
+        token = body.authorization
+      })
     })
 
     // Buscar um produto para usar nos testes

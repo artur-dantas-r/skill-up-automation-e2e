@@ -20,30 +20,34 @@ describe('GET /carrinhos', () => {
       usuario2 = body
     })
 
-    // Fazer login com ambos para obter tokens
-    cy.apiLogin({ email: novoUsuario1.email, password: novoUsuario1.password }).then(({ body }) => {
-      token1 = body.authorization
+    cy.then(() => {
+      // Fazer login com ambos para obter tokens
+      cy.apiLogin({ email: novoUsuario1.email, password: novoUsuario1.password }).then(({ body }) => {
+        token1 = body.authorization
+      })
+  
+      cy.apiLogin({ email: novoUsuario2.email, password: novoUsuario2.password }).then(({ body }) => {
+        token2 = body.authorization
+      })
     })
 
-    cy.apiLogin({ email: novoUsuario2.email, password: novoUsuario2.password }).then(({ body }) => {
-      token2 = body.authorization
-    })
-
-    // Buscar um produto para usar nos testes
-    cy.apiGetProducts().then(({ body }) => {
-      expect(body.produtos.length).to.be.greaterThan(0, 'Deve haver pelo menos um produto disponível')
-      produtoId = body.produtos[0]._id
-
-      // Criar carrinhos para ambos usuários
-      const novoCarrinho = cartFactory([
-        {
-          idProduto: produtoId,
-          quantidade: 1
-        }
-      ])
-
-      cy.apiCreateCart(novoCarrinho, token1)
-      cy.apiCreateCart(novoCarrinho, token2)
+    cy.then(() => {
+      // Buscar um produto para usar nos testes
+      cy.apiGetProducts().then(({ body }) => {
+        expect(body.produtos.length).to.be.greaterThan(0, 'Deve haver pelo menos um produto disponível')
+        produtoId = body.produtos[0]._id
+  
+        // Criar carrinhos para ambos usuários
+        const novoCarrinho = cartFactory([
+          {
+            idProduto: produtoId,
+            quantidade: 1
+          }
+        ])
+  
+        cy.apiCreateCart(novoCarrinho, token1)
+        cy.apiCreateCart(novoCarrinho, token2)
+      })
     })
   })
 
