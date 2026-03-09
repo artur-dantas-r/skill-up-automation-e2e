@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker"
 import { userFactory } from "../../support/utils"
 
 describe('login', () => {
-
+    
     beforeEach(() => {
         cy.visit('/')
         cy.intercept('**/login').as('loginRequest')
@@ -17,7 +17,7 @@ describe('login', () => {
         before(() => {
             cy.log('Cadastrando novo usuário para testes de login')
 
-            cy.apiSignUpUser(user, true).then(res => {
+            cy.apiSignUpUser(user).then(res => {
                 expect(res.status).to.equal(201, 'Usuário cadastrado com successo')
                 userId = res.body._id
             })

@@ -1,7 +1,6 @@
 /// <reference types="cypress" />
 import { userFactory } from "../../support/utils"
 
-
 describe('signup', () => {
 
     beforeEach(() => {
@@ -77,7 +76,7 @@ describe('signup', () => {
 
             cy.log('Cadastrando novo usuário para testes de login')
 
-            cy.apiSignUpUser(user, true)
+            cy.apiSignUpUser(user)
                 .then(res => {
                     expect(res.status).to.equal(201, 'Usuário cadastrado com successo')
                     // Salvando IDs para deletar os usuários ao finalizar os testes

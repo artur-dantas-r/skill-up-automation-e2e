@@ -1,8 +1,6 @@
 import { cartFactory, userFactory } from '../../../support/utils'
 
 describe('DELETE /carrinhos', () => {
-    let usuario1
-    let usuario2
     let token1
     let token2
     let produtoId
