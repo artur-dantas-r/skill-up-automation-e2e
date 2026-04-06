@@ -1,0 +1,27 @@
+{
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+
+	"editor.formatOnSave": false,
+	"editor.formatOnPaste": false,
+	"editor.formatOnType": false,
+
+	// Indentação 100% TAB
+	"editor.insertSpaces": false,
+	"editor.tabSize": 4,
+	"editor.detectIndentation": false,
+
+	"files.eol": "\n",
+
+	"prettier.useTabs": true,
+	"prettier.tabWidth": 4,
+	"prettier.endOfLine": "lf",
+	"prettier.semi": false,
+	"prettier.singleQuote": true,
+	"prettier.trailingComma": "none",
+
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.insertSpaces": false,
+		"editor.tabSize": 4
+	}
+}

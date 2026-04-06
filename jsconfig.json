@@ -1,0 +1,7 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"outDir": "./.built/",
+		"types": ["node", "@wdio/globals/types", "@wdio/mocha-framework"]
+	}
+}
