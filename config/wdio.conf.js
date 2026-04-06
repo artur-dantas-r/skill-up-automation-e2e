@@ -26,7 +26,7 @@ export const config = {
 	//
 	specs: [
 		// ToDo: define location for spec files here
-		'../test/specs/color-note/*.js'
+		'../test/specs/*.js'
 	],
 	// Patterns to exclude.
 	exclude: [
@@ -63,7 +63,7 @@ export const config = {
 			'appium:automationName': 'UiAutomator2',
 			'appium:app': path.join(
 				process.cwd(),
-				'app/android/ColorNote+Notepad.apk'
+				'app/mda-2.2.0-25.apk'
 			),
 			'appium:autoGrantPermissions': true
 		}
