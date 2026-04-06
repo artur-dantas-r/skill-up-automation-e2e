@@ -1,83 +1,95 @@
-<h1>🧪 Skill Up — Testes Automatizados E2E</h1>
+# Skill Up — Automação E2E
 
-Este repositório reúne todos os códigos, e projetos desenvolvidos durante meu aprendizado em automação de testes ponta a ponta (E2E).
-O objetivo é registrar minha evolução técnica — desde os fundamentos de lógica e JavaScript, até práticas avançadas com Cypress, Appium, WebdriverIO e CI/CD com Jenkins.
+Projeto de testes end-to-end (E2E) para mobile (Android) usando WebdriverIO + Appium. O conjunto de testes cobre fluxos básicos de criação, edição e exclusão de notas (ex.: Color Note) e segue um padrão Page Object com ações, asserções e fluxos reutilizáveis.
 
-<h2>🧭 Estrutura do curso</h2>
+**Visão Geral**
 
-1️⃣ Lógica / JavaScript / TDD
+- **Stack:** WebdriverIO, Appium, Node.js
+- **Plataforma alvo:** Android (emulador ou dispositivo real)
+- **Objetivo:** testes E2E para os fluxos de notas (adicionar, editar, excluir)
 
-Fundamentos de lógica de programação
+**Estrutura do Projeto**
 
-Sintaxe e recursos do JavaScript
+- **`config/`**: arquivos de configuração do WebdriverIO
+	- [config/wdio.conf.js](config/wdio.conf.js) — configuração local
+	- [config/wdio.cloud.conf.js](config/wdio.cloud.conf.js) — configuração para provedores na nuvem
+- **`app/android/`**: apks ou arquivos relacionados ao app Android usado nos testes
+- **`test/`**: código dos testes e helpers
+	- `actions/` — ações reutilizáveis (ex.: interações com telas)
+	- `assertions/` — asserções customizadas
+	- `flows/` — fluxos de teste compostos (combinações de ações)
+	- `screens/` — Page Objects / representações de telas
+	- `specs/` — arquivos de especificação (os testes em si)
+	- `utils/` — utilitários auxiliares
+- **`images/`**: imagens e recursos usados nos testes
+- **`package.json`**: dependências e scripts do projeto
 
-Introdução a Test Driven Development (TDD)
+**Pré-requisitos**
 
-2️⃣ Git & Gitflow
+- Node.js (recomenda-se v14+)
+- npm ou yarn
+- Java JDK (necessário para Android/emulador)
+- Android SDK + Platform Tools (`adb`) e um emulador ou dispositivo Android
+- Appium (servidor local) ou conta em um provedor de nuvem (BrowserStack, Sauce Labs, etc.)
+- Variáveis de ambiente configuradas quando necessário (ex.: `ANDROID_HOME`, credenciais do provedor de nuvem)
 
-Conceitos de versionamento
+**Instalação**
 
-Criação e gerenciamento de branches
+```bash
+git clone -b appium-webdriverio --single-branch https://github.com/artur-dantas-r/skill-up-automation-e2e.git
+cd skill-up-automation-e2e
+npm install
+```
 
-Fluxo de trabalho com Gitflow
+**Configuração**
 
-3️⃣ Arquitetura de Testes Automatizados
+- Ajuste capacidades e o caminho do `app` em [config/wdio.conf.js](config/wdio.conf.js) para executar localmente.
+- Para execução em provedor na nuvem, configure as credenciais e capacidades em [config/wdio.cloud.conf.js](config/wdio.cloud.conf.js).
 
-Estrutura de projetos de automação
+**Executando os testes**
 
-Boas práticas de organização e reutilização de código
+- Executar todos os testes localmente:
+```bash
+npx wdio run ./config/wdio.conf.js
+```
+- Executar um spec específico:
+```bash
+npx wdio run ./config/wdio.conf.js --spec ./test/specs/color-note/add-note.spec.js
+```
+- Executar usando configuração de nuvem:
+```bash
+npx wdio run ./config/wdio.cloud.conf.js
+```
 
-Padrões de design aplicados a testes
+**Scripts úteis**
 
-4️⃣ Cypress (API/Web) & Reports
+- `npm run wdio:local` — executa testes localmente usando `config/wdio.conf.js`.
+- `npm run wdio:cloud` — executa testes em provedores na nuvem usando `config/wdio.cloud.conf.js`.
 
-Automação de testes Web e API com Cypress
+Exemplos rápidos:
 
-Geração de relatórios automatizados
+```bash
+npm run wdio:local
+npm run wdio:cloud
+```
 
-Execução paralela e integração com pipelines
+Nota: para execução local em CI é necessário um runner self-hosted com Android e Appium; nesse caso use `npm run wdio:local`.
 
-5️⃣ Appium + WebdriverIO
+Observação: se existirem scripts npm configurados em `package.json`, também é possível usar `npm run <script>`.
 
-Fundamentos de automação mobile com Appium
+**Como escrever novos testes**
 
-Testes cross-platform
+- Siga o padrão existente: crie/atualize um `screen` em `test/screens/`, reutilize `actions/` para interações e `assertions/` para verificações. Escreva o teste em `test/specs/` e, quando aplicável, componha o fluxo em `test/flows/`.
 
-Uso do WebdriverIO como framework complementar
+**Dicas e Troubleshooting**
 
-6️⃣ CI/CD & Jenkins
+- Certifique-se de que o Appium esteja rodando (local) ou que as credenciais do provedor de nuvem estejam corretas.
+- Verifique dispositivos conectados com `adb devices`.
+- Confirme o caminho do APK configurado em `config/wdio.conf.js`.
 
-Conceitos de Integração e Entrega Contínua
+**Contribuindo**
 
-Configuração de pipelines no Jenkins
+- Abra uma issue para discutir mudanças importantes.
+- Envie PRs com mudanças pequenas e testes quando apropriado.
 
-Execução automatizada de testes
-
-<h2>🚀 Tecnologias e ferramentas</h2>
-
-JavaScript (ES6+)
-
-Git & Gitflow
-
-Cypress
-
-Appium
-
-WebdriverIO
-
-Jenkins / CI-CD
-
-<h2>🧠 Objetivo</h2>
-
-Dominar os fundamentos e ferramentas da automação de testes E2E, desenvolvendo habilidades práticas para atuar como QA técnico com foco em código limpo, arquitetura sólida e integração contínua.
-
-<h2>📈 Progresso</h2>
-
-| Módulo | Status |
-|--------|--------|
-| Lógica / JavaScript / TDD | ✅ Finalizado |
-| Git & Gitflow | ✅ Finalizado |
-| Arquitetura de Testes Automatizados | 🔄️ Em progresso |
-| Cypress (API/Web) & Reports | ⏳ Em breve |
-| Appium + WebdriverIO | ⏳ Em breve |
-| CI/CD & Jenkins | ⏳ Em breve |
+---

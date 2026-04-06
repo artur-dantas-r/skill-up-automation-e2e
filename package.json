@@ -4,6 +4,7 @@
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
 		"@types/webdriverio": "^4.13.3",
+		"@wdio/eslint": "^0.1.3",
 		"@wdio/appium-service": "^9.24.0",
 		"@wdio/browserstack-service": "^9.27.0",
 		"@wdio/cli": "^9.24.0",
@@ -20,8 +21,5 @@
 	"scripts": {
 		"wdio:cloud": "npx wdio ./config/wdio.cloud.conf.js",
 		"wdio:local": "npx wdio ./config/wdio.conf.js"
-	},
-	"dependencies": {
-		"@wdio/eslint": "^0.1.3"
 	}
 }
