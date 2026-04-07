@@ -19,7 +19,6 @@
 		"globals": "^17.4.0"
 	},
 	"scripts": {
-		"wdio:cloud": "npx wdio ./config/wdio.cloud.conf.js",
 		"wdio:local": "npx wdio ./config/wdio.conf.js"
 	}
 }
