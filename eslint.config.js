@@ -12,7 +12,8 @@ export default defineConfig(
 			rules: {
 				'no-undef': 'off',
 				'@stylistic/indent': ['error', 'tab'],
-				'@stylistic/no-tabs': 'off'
+				'@stylistic/no-tabs': 'off',
+				'@stylistic/end-of-line': 'CRLF'
 			}
 		}
 	])

@@ -14,7 +14,7 @@
 
 	"prettier.useTabs": true,
 	"prettier.tabWidth": 4,
-	"prettier.endOfLine": "lf",
+	"prettier.endOfLine": "crlf",
 	"prettier.semi": false,
 	"prettier.singleQuote": true,
 	"prettier.trailingComma": "none",
